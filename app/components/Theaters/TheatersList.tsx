@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 
-import { useAmplifyClient } from "@/app/providers/AmplifyClientProvider";
+import { useAmplifyClient } from "@/app/providers/AmplifyClientProvider"; 
 import TheaterLI from "@/app/components/Theaters/TheaterLI";
 import { TheaterType } from "@/app/utils/typeDeclarations";
 export default function TheatersList() {

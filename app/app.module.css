@@ -1,0 +1,7 @@
+.container {
+  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
+  margin: auto;
+  width: 80%;
+}

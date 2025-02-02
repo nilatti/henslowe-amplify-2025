@@ -1,7 +1,9 @@
-export default function LearnMore() {
+import TheatersList from "../components/Theaters/TheatersList";
+export default function Theaters() {
+  
   return (
     <div className="content">
-      This is where content about more details belongs
+    <TheatersList />
     </div>
   );
 }
