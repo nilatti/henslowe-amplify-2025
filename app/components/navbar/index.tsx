@@ -3,8 +3,8 @@ import styles from "./navbarStyles.module.css";
 import React, { useState } from "react";
 import Link from "next/link";
 
-import { IoClose, IoMenu } from "react-icons/io5";
-import Login from "@/app/login/page";
+// import { IoClose, IoMenu } from "react-icons/io5";
+// import Login from "@/app/login/page";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -74,19 +74,19 @@ const Navbar = () => {
                 >
                 Login/Sign Up
                 </Link>
-                {showLogin ? <Login /> : "Login/Sign Up"}
+                {/* {showLogin ? <Login /> : "Login/Sign Up"} */}
             </li>
           </ul>
           <div
             className={`${styles.navToggle} ${styles.navClose}`}
             onClick={toggleMenu}
           >
-            <IoClose />
+            {/* <IoClose /> */}
           </div>
         </div>
 
         <div className={styles.navToggle} onClick={toggleMenu}>
-          <IoMenu />
+          {/* <IoMenu /> */}
         </div>
       </nav>
     </header>

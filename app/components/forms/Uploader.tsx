@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { FileUploader } from '@aws-amplify/ui-react-storage';
+// import { FileUploader } from '@aws-amplify/ui-react-storage';
 import '@aws-amplify/ui-react/styles.css';
-import ConfigureAmplifyClientSide from "@/app/ConfigureAmplify";
+// import ConfigureAmplifyClientSide from "@/app/ConfigureAmplify";
 
 export const Uploader = ({onSuccess}: {onSuccess: Function}) => {
   return (
     <>
-<ConfigureAmplifyClientSide />
+{/* <ConfigureAmplifyClientSide />
     <FileUploader
       acceptedFileTypes={['application/pdf']}
       path={({identityId}) => `resumes/${identityId}/`}
@@ -19,7 +19,7 @@ export const Uploader = ({onSuccess}: {onSuccess: Function}) => {
       onUploadSuccess={({ key }) => {
           onSuccess({fileName: key})
       }}
-      />
-      </>
+      /> */}
+      </> 
   );
 };
