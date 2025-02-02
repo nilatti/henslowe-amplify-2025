@@ -1,0 +1,23 @@
+.button {
+  background-color: var(--color-dark);
+  border-color: var(--color-dark);
+  border-radius: 4px;
+  border-style: solid;
+  color: var(--color-text-light);
+  cursor: pointer;
+  display: inline-block;
+  margin: 5px;
+  max-width: 200px;
+  padding: 7px;
+  &:hover {
+    background-color: var(--color-text-light);
+    border-color: var(--color-dark);
+    color: var(--color-dark);
+  }
+  &:disabled {
+    background-color: var(--color-dark-disabled);
+    border-color: var(--color-dark);
+    color: var(--color-text-light);
+    cursor: none;
+  }
+}

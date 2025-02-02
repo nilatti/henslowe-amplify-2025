@@ -1,4 +1,5 @@
 import React, { useState, FormEvent, ReactNode } from "react";
+import { Button } from "../interface/Button";
 
 export default function BaseForm({
   onSubmit,
@@ -10,4 +11,23 @@ export default function BaseForm({
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return <form onSubmit={onSubmit}>{children}</form>;
+}
+
+export function FormButtonGroup({
+  cancelLabel,
+  submitLabel,
+  cancelFunction,
+}: {
+  cancelLabel?: string;
+  submitLabel?: string;
+  cancelFunction: () => void;
+}) {
+  return (
+    <>
+      <Button type="submit">{submitLabel || "Submit"}</Button>
+      <Button type="button" onClick={cancelFunction}>
+        {cancelLabel || "Cancel"}
+      </Button>
+    </>
+  );
 }

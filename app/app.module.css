@@ -5,3 +5,15 @@
   margin: auto;
   width: 80%;
 }
+
+.pageContent {
+  margin-top: 75px;
+  width: 100%;
+  @media screen and (min-width: 600px) {
+    margin-top: 150px;
+    width: 85%;
+    .pageContent h2 {
+      text-align: center;
+    }
+  }
+}

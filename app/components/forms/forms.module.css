@@ -69,3 +69,32 @@
 .checkboxWrapper label::before {
   transition: 0.25s all ease;
 }
+
+.formGroupInline {
+  display: flex;
+  flex-flow: column nowrap;
+
+  margin: 10px 0;
+  width: 100%;
+  justify-content: "space-between";
+  @media screen and (min-width: 480px) {
+    flex-flow: row wrap;
+  }
+}
+
+.formGroupInline input {
+  flex-basis: 50%;
+}
+
+.formGroupInline input[type="number"] {
+  flex-basis: 10%;
+}
+
+.formGroupInline label {
+  flex-basis: 80%;
+  @media screen and (min-width: 480px) {
+    flex-basis: 50%;
+    padding-right: 25px;
+    text-align: right;
+  }
+}
