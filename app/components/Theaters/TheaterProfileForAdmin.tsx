@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   AddressInputWithToggle,
   //   TelephoneInputWithToggle,
@@ -51,7 +51,7 @@ export default function TheaterProfileForAdmin({
     });
   }
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log(55, workingTheater);
     closeAllForms();
