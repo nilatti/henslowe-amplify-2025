@@ -11,6 +11,9 @@ import {
   US_STATES_ARRAY,
 } from "../../utils/hardcodedConstants";
 import BaseForm, { FormButtonGroup } from "./BaseForm";
+import { AddressType, InputProps, ToggleFormType } from "@/app/utils/typeDeclarations";
+import GenericInput from "./GenericInput";
+
 export const AddressInput = ({
   city,
   onChange,
@@ -19,13 +22,9 @@ export const AddressInput = ({
   street_address,
   zip,
 }: {
-  city?: string;
   onChange: ChangeEventHandler;
   label?: string;
-  state?: string;
-  street_address?: string;
-  zip?: string;
-}) => {
+} & AddressType) => {
   const states = US_STATES_ARRAY.map((us_state) => (
     <option key={us_state.abbr} value={us_state.abbr}>
       {us_state.name}
@@ -34,46 +33,36 @@ export const AddressInput = ({
   return (
     <>
       <h3>{label || "Address"}</h3>
-      <div className={styles.formGroupInline}>
-        <label>Street Address</label>
-        <input
-          type="text"
-          placeholder="street address"
-          name="street_address"
-          value={street_address}
-          onChange={onChange}
-        />
-      </div>
-      <div className={styles.formGroupInline}>
-        <label>City</label>
-        <input
-          type="text"
-          placeholder="city"
-          name="city"
-          value={city}
-          onChange={onChange}
-        />
-      </div>
+      <GenericInput
+        label="Street Address"
+        name="street_address"
+        type="text"
+        value={street_address}
+        onChange={onChange}
+      />
+      <GenericInput
+        label="City"
+        name="city"
+        type="text"
+        value={city}
+        onChange={onChange}
+      />
       <div className={styles.formGroupInline}>
         <label>State</label>
         <select name="state" onChange={onChange} value={state}>
           {states}
         </select>
       </div>
-      <div className={styles.formGroupInline}>
-        <label>Zip Code</label>
-        <input
-          type="number"
-          placeholder="zip"
-          name="zip"
-          value={zip}
-          onChange={onChange}
-        />{" "}
-      </div>
+      <GenericInput
+        label="Zip Code"
+        name="zip"
+        type="number"
+        value={zip}
+        onChange={onChange}
+      />
     </>
   );
 };
-
 export const AddressInputWithToggle = ({
   city,
   formOpen,
@@ -87,16 +76,11 @@ export const AddressInputWithToggle = ({
   zip,
 }: {
   city?: string;
-  formOpen: boolean;
   onChange: ChangeEventHandler;
-  handleFormClose: () => void;
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  toggleForm: () => void;
-  toggleText: string;
   state?: string;
   street_address?: string;
   zip?: string;
-}) => {
+} & ToggleFormType) => {
   if (formOpen) {
     return (
       <BaseForm onSubmit={(e) => handleSubmit(e)}>
@@ -188,24 +172,17 @@ export const Email = ({ name }: { name: string }) => {
 
   return (
     <>
-      <input
-        autoFocus
-        className="invalid:bg-red-200 invalid:text-red-800"
+      <GenericInput
+        label="Email"
         name={name}
-        onChange={handleEmailChange}
         type="email"
         value={email}
-      ></input>
-      {error && (
-        <div>
-          {" "}
-          <p className="error">{error}</p>
-        </div>
-      )}
+        onChange={handleEmailChange}
+      />
+      {error && <p className="error">{error}</p>}
     </>
   );
 };
-
 export const RadioSelect = ({
   additionalClassName,
   name,
@@ -250,11 +227,136 @@ export const SubmitButton = ({
 }) => {
   return <button type="submit">{children}</button>;
 };
+export const TelephoneInput = ({
+  label,
+  onChange,
+  name,
+  value,
+}: InputProps) => {
+  return (
+    <GenericInput
+        label={label}
+        name={name}
+        type="tel"
+        value={value}
+        onChange={onChange}
+      />
+  );
+};
+export const TelephoneInputWithToggle = ({
+  formOpen,
+  handleFormClose,
+  handleSubmit,
+  toggleForm,
+  toggleText,
+  ...inputProps
+}: InputProps & ToggleFormType) => {
+  if (formOpen) {
+    return (
+      <BaseForm onSubmit={(e) => handleSubmit(e)}>
+        <TelephoneInput
+          {...inputProps}
+        />
+        <FormButtonGroup cancelFunction={handleFormClose} />
+      </BaseForm>
+    );
+  } else if (inputProps.value) {
+    return <div onDoubleClick={toggleForm}>{inputProps.value}</div>;
+  } else {
+    return <div onDoubleClick={toggleForm}>{toggleText}</div>;
+  }
+};
 export const Text = ({ name }: { name: string }) => {
   return <input autoFocus name={name} type="text" />;
 };
+export const TextInput = ({
+  label,
+  onChange,
+  name,
+  value,
+}: {
+  label: string;
+  onChange: ChangeEventHandler;
+  name: string;
+  value?: string;
+}) => {
+  return (
+    <GenericInput
+        label={label}
+        name={name}
+        type="text"
+        value={value}
+        onChange={onChange}
+      />
+  );
+};
+export const TextInputWithToggle = ({
+  formOpen,
+  handleFormClose,
+  handleSubmit,
+  toggleForm,
+  toggleText,
+  ...inputProps
+}: InputProps & ToggleFormType) => {
+  if (formOpen) {
+    return (
+      <BaseForm onSubmit={(e) => handleSubmit(e)}>
+        <TextInput
+          {...inputProps}
+        />
+        <FormButtonGroup cancelFunction={handleFormClose} />
+      </BaseForm>
+    );
+  } else if (inputProps.value) {
+    return <div onDoubleClick={toggleForm}>{inputProps.value}</div>;
+  } else {
+    return <div onDoubleClick={toggleForm}>{toggleText}</div>;
+  }
+};
 export const TextArea = ({ name }: { name: string }) => {
   return <textarea autoFocus cols={100} name={name} rows={30} />;
+};
+export const TextAreaInput = ({
+  label,
+  onChange,
+  name,
+  value,
+}: InputProps) => {
+  return (
+    <div className={styles.formGroupInline}>
+      <label>{label}</label>
+      <textarea
+        cols={100}
+        name={name}
+        rows={30}
+        value={value}
+        onChange={onChange}
+      />
+    </div>
+  );
+};
+export const TextAreaInputWithToggle = ({
+  formOpen,
+  handleFormClose,
+  handleSubmit,
+  toggleForm,
+  toggleText,
+  ...inputProps
+}: InputProps & ToggleFormType)=> {
+  if (formOpen) {
+    return (
+      <BaseForm onSubmit={(e) => handleSubmit(e)}>
+        <TextAreaInput
+          {...inputProps}
+        />
+        <FormButtonGroup cancelFunction={handleFormClose} />
+      </BaseForm>
+    );
+  } else if (inputProps.value) {
+    return <div onDoubleClick={toggleForm}>{inputProps.value}</div>;
+  } else {
+    return <div onDoubleClick={toggleForm}>{toggleText}</div>;
+  }
 };
 export const Url = ({ name }: { name: string }) => {
   const [url, setUrl] = useState("");
@@ -294,4 +396,47 @@ export const Url = ({ name }: { name: string }) => {
       )}
     </>
   );
+};
+export const UrlInput = ({
+  label,
+  onChange,
+  name,
+  value,
+}: InputProps) => {
+  return (
+    <GenericInput
+        label={label}
+        name={name}
+        type="url"
+        value={value}
+        onChange={onChange}
+      />
+  );
+};
+export const UrlInputWithToggle = ({
+  formOpen,
+  handleFormClose,
+  handleSubmit,
+  toggleForm,
+  toggleText,
+  ...inputProps
+}: {
+  formOpen: boolean;
+  handleFormClose: () => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  toggleForm: () => void;
+  toggleText: string;
+} & InputProps ) => {
+  if (formOpen) {
+    return (
+      <BaseForm onSubmit={(e) => handleSubmit(e)}>
+        <UrlInput {...inputProps} />
+        <FormButtonGroup cancelFunction={handleFormClose} />
+      </BaseForm>
+    );
+  } else if (inputProps.value) {
+    return <div onDoubleClick={toggleForm}>{inputProps.value}</div>;
+  } else {
+    return <div onDoubleClick={toggleForm}>{toggleText}</div>;
+  }
 };

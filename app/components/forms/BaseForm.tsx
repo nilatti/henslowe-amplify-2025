@@ -20,7 +20,7 @@ export function FormButtonGroup({
 }: {
   cancelLabel?: string;
   submitLabel?: string;
-  cancelFunction: () => void;
+  cancelFunction: React.MouseEventHandler<HTMLButtonElement>;
 }) {
   return (
     <>

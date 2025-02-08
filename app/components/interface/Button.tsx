@@ -4,7 +4,7 @@ export const Button = ({
   type,
   children,
 }: {
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   type?: "button" | "submit" | "reset";
   children: any;
 }) => {

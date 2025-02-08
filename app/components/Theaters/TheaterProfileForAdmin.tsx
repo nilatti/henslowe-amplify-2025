@@ -2,12 +2,11 @@
 import React, { useState } from "react";
 import {
   AddressInputWithToggle,
-  //   TelephoneInputWithToggle,
-  //   TextInputAsForm,
-  //   TextAreaInputWithToggle,
-  //   UrlInputWithToggle,
+  TelephoneInputWithToggle,
+  TextInputWithToggle,
+  TextAreaInputWithToggle,
+  UrlInputWithToggle,
 } from "../forms/Inputs";
-// import { useForm } from "../../hooks/environmentUtils";
 // import { deleteItem } from "../../api/crud";
 import { TheaterType } from "@/app/utils/typeDeclarations";
 
@@ -24,17 +23,7 @@ export default function TheaterProfileForAdmin({
   const [nameForm, setNameForm] = useState(false);
   const [phoneForm, setPhoneForm] = useState(false);
   const [urlForm, setUrlForm] = useState(false);
-  //   const { inputs, handleChange } = useForm({
-  //     city: theater?.city || "",
-  //     id: theater?.id || null,
-  //     mission_statement: theater?.mission_statement || "",
-  //     name: theater?.name || "0",
-  //     phone_number: theater?.phone_number || "",
-  //     state: theater?.state || "",
-  //     street_address: theater?.street_address || "",
-  //     website: theater?.website || "",
-  //     zip: theater?.zip || "",
-  //   });
+  
   function closeAllForms() {
     setAddressForm(false);
     setMissionForm(false);
@@ -51,32 +40,12 @@ export default function TheaterProfileForAdmin({
     });
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log(55, workingTheater);
+    await updateTheater(workingTheater);
     closeAllForms();
   }
-
-  function toggleAddressForm() {
-    setAddressForm(!addressForm);
-  }
-
-  function toggleMissionForm() {
-    setMissionForm(!missionForm);
-  }
-
-  function toggleNameForm() {
-    setNameForm(!nameForm);
-  }
-
-  function togglePhoneForm() {
-    setPhoneForm(!phoneForm);
-  }
-
-  function toggleUrlForm() {
-    setUrlForm(!urlForm);
-  }
-
   //   async function handleDelete(theaterId) {
   //     let response = await deleteItem(theaterId, "theater");
   //     if (response.status >= 400) {
@@ -89,77 +58,74 @@ export default function TheaterProfileForAdmin({
   return (
     <div>
       <div>
-        {/* {nameForm ? (
-          <TextInputAsForm
-            handleChange={handleChange}
-            handleFormClose={toggleNameForm}
+        <h2>
+          <TextInputWithToggle
+            formOpen={nameForm}
+            handleFormClose={() => setNameForm(false)}
             handleSubmit={handleSubmit}
             label="Company Name"
-            name="name"
-            value={inputs.name}
+            name={"name"}
+            onChange={onChange}
+            toggleForm={() => setNameForm(!nameForm)}
+            toggleText={`Double click to set company name`}
+            value={workingTheater.name}
           />
-        ) : (
-          <>
-            <h2 onDoubleClick={toggleNameForm}>
-              {theater.name}
-            </h2>
-            <span
+        </h2>
+        {/* <span
               className="right floated trash icon"
               onClick={() => handleDelete(theater.id)}
             >
               <i className="fas fa-trash-alt"></i>
-            </span>
-          </>
-        )}
+            </span> */}
       </div>
 
       <TextAreaInputWithToggle
         formOpen={missionForm}
-        handleChange={handleChange}
-        handleFormClose={toggleMissionForm}
+        handleFormClose={() => setMissionForm(false)}
         handleSubmit={handleSubmit}
         label="Mission Statement"
         name="mission_statement"
-        toggleForm={toggleMissionForm}
+        onChange={onChange}
+        toggleForm={() => setMissionForm(!missionForm)}
         toggleText="Double click to set mission statement"
-        value={inputs.mission_statement}
-      /> */}
+        value={workingTheater.mission_statement}
+      />
 
-        <AddressInputWithToggle
-          city={workingTheater.city}
-          formOpen={addressForm}
-          onChange={onChange}
-          handleFormClose={toggleAddressForm}
-          handleSubmit={handleSubmit}
-          toggleForm={toggleAddressForm}
-          toggleText="Double click to add address"
-          state={workingTheater.state}
-          street_address={workingTheater.street_address}
-          zip={workingTheater.zip}
-        />
-        {/* <TelephoneInputWithToggle
+      <AddressInputWithToggle
+        city={workingTheater.city}
+        formOpen={addressForm}
+        onChange={onChange}
+        handleFormClose={() => setAddressForm(false)}
+        handleSubmit={handleSubmit}
+        toggleForm={() => setAddressForm(!addressForm)}
+        toggleText="Double click to add address"
+        state={workingTheater.state}
+        street_address={workingTheater.street_address}
+        zip={workingTheater.zip}
+      />
+      <TelephoneInputWithToggle
         formOpen={phoneForm}
-        handleChange={handleChange}
-        handleFormClose={togglePhoneForm}
+        handleFormClose={() => setPhoneForm(false)}
         handleSubmit={handleSubmit}
         label="Telephone"
         name="phone_number"
-        toggleForm={togglePhoneForm}
+        onChange={onChange}
+        toggleForm={() => setPhoneForm(!phoneForm)}
         toggleText="Doubleclick to add phone number"
-        value={inputs.phone_number}
+        value={workingTheater.phone_number}
       />
+
       <UrlInputWithToggle
         formOpen={urlForm}
-        handleChange={handleChange}
-        handleFormClose={toggleUrlForm}
+        handleFormClose={() => setUrlForm(false)}
         handleSubmit={handleSubmit}
         label="Website"
         name="website"
-        toggleForm={toggleUrlForm}
+        onChange={onChange}
+        toggleForm={() => setUrlForm(!urlForm)}
         toggleText="Doubleclick to add website"
-        value={inputs.website}
-      /> */}
-      </div>
+        value={workingTheater.website}
+      />
     </div>
   );
 }

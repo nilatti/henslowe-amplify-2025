@@ -11,6 +11,9 @@ export default function TheaterShow({ id }: { id: number }) {
   const [theater, setTheater] = useState<TheaterType>();
   const userRole = "admin";
 
+  async function updateTheater(theater: TheaterType) {
+    await client.models.theaters.update(theater);
+  }
   useEffect(() => {
     async function fetchTheater() {
       try {
@@ -33,7 +36,7 @@ export default function TheaterShow({ id }: { id: number }) {
   return (
     <div className={styles.profile}>
       {userRole === "admin" ? (
-        <TheaterProfileForAdmin theater={theater} updateTheater={() => {}} />
+        <TheaterProfileForAdmin theater={theater} updateTheater={updateTheater} />
       ) : (
         <TheaterProfileForVisitor theater={theater} />
       )}
