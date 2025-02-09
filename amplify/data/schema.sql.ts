@@ -11,6 +11,32 @@ export const schema = configure({
         connectionUri: secret("SQL_CONNECTION_STRING")
     }
 }).schema({
+    "space_agreements": a.model({
+        id: a.integer().required(),
+        theater_id: a.integer(),
+        space_id: a.integer(),
+        created_at: a.datetime().required(),
+        updated_at: a.datetime().required()
+    }).identifier([
+        "id"
+    ]),
+    "spaces": a.model({
+        id: a.integer().required(),
+        name: a.string(),
+        street_address: a.string(),
+        city: a.string(),
+        state: a.string(),
+        zip: a.string(),
+        phone_number: a.string(),
+        website: a.string(),
+        seating_capacity: a.integer(),
+        created_at: a.datetime().required(),
+        updated_at: a.datetime().required(),
+        mission_statement: a.string(),
+        logo: a.string()
+    }).identifier([
+        "id"
+    ]),
     "theaters": a.model({
         id: a.integer().required(),
         name: a.string(),
@@ -25,7 +51,7 @@ export const schema = configure({
         created_at: a.datetime().required(),
         updated_at: a.datetime().required(),
         logo: a.string(),
-        fake: a.integer()
+        fake: a.boolean()
     }).identifier([
         "id"
     ]),

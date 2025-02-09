@@ -1,0 +1,22 @@
+.profile {
+  display: flex;
+  flex-flow: column nowrap;
+  text-align: center;
+  align-items: center;
+}
+
+.profile div {
+  padding: 15px 0;
+  width: 100%;
+}
+.profile h2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 5px;
+}
+
+.profile h2 div {
+  flex: 1;
+  font-size: 0.8em;
+}

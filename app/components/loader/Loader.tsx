@@ -41,7 +41,7 @@ export function TextSpinnerLoader({text}: {text: string}) {
   }, []);
 
   return (
-    <div>LOADING</div>
+    <div>{text}</div>
     // <motion.div ref={scope} className={styles.circle} style={{ width: radius * 2 }}>
     //   <p aria-label={text} />
     //   <p aria-hidden="true" className="text">

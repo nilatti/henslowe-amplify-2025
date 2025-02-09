@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useAmplifyClient } from "@/app/providers/AmplifyClientProvider"; 
 import TheaterLI from "@/app/components/Theaters/TheaterLI";
 import { TheaterType } from "@/app/utils/typeDeclarations";
+import { TextSpinnerLoader } from "../loader/Loader";
 export default function TheatersList() {
   const client = useAmplifyClient();
   const [theaters, setTheaters] = useState<TheaterType[]>([]);
@@ -27,7 +28,9 @@ export default function TheatersList() {
 
   let otherTheatersList = theaters.map((theater) => (
     <TheaterLI key={theater.id} theater={theater} />))
-
+    if (!theaters.length) {
+      return <TextSpinnerLoader text="Loading theaters" />
+    }
    return (
     <div>
       <h3>Your theaters</h3>

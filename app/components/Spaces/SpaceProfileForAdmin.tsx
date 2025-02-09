@@ -7,21 +7,21 @@ import {
   TextAreaInputWithToggle,
   UrlInputWithToggle,
 } from "../forms/Inputs";
-import { TheaterType } from "@/app/utils/typeDeclarations";
+import { SpaceType } from "@/app/utils/typeDeclarations";
 import { useAmplifyClient } from "@/app/providers/AmplifyClientProvider";
 import { IoTrash } from "react-icons/io5";
 
-export default function TheaterProfileForAdmin({
+export default function SpaceProfileForAdmin({
   onDelete,
-  theater,
-  updateTheater,
+  space,
+  updateSpace,
 }: {
   onDelete: Function;
-  theater: TheaterType;
-  updateTheater: Function;
+  space: SpaceType;
+  updateSpace: Function;
 }) {
   const client = useAmplifyClient();
-  const [workingTheater, setWorkingTheater] = useState(theater);
+  const [workingSpace, setWorkingSpace] = useState(space);
   const [addressForm, setAddressForm] = useState(false);
   const [missionForm, setMissionForm] = useState(false);
   const [nameForm, setNameForm] = useState(false);
@@ -38,24 +38,30 @@ export default function TheaterProfileForAdmin({
   }
 
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setWorkingTheater({
-      ...workingTheater,
+    console.log(44, e.target.name, e.target.value);
+    setWorkingSpace({
+      ...workingSpace,
       [e.target.name]: e.target.value,
     });
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    await updateTheater(workingTheater);
+    console.log(55, workingSpace);
+    await updateSpace(workingSpace);
     closeAllForms();
   }
-    async function handleDelete(theaterId: number) {
-      let response = await client.models.theaters.delete({id: theaterId});
-      if (response.errors) {
-        // tk add error handling
-        console.log("error deleting theater", response.errors);
-      } else {
-        onDelete();
+    async function handleDelete(spaceId: number) {
+      try {
+        console.log(spaceId);
+        let response = await client.models.spaces.delete({ id: spaceId });
+        if (response.errors) {
+          console.error("Error deleting space:", response.errors);
+        } else {
+          onDelete();
+        }
+      } catch (error) {
+        console.error("Unhandled error during delete operation:", error);
       }
     }
 
@@ -72,12 +78,13 @@ export default function TheaterProfileForAdmin({
             onChange={onChange}
             toggleForm={() => setNameForm(!nameForm)}
             toggleText={`Double click to set company name`}
-            value={workingTheater.name}
+            value={workingSpace.name}
           />
         </h2>
-        <span onClick={() => handleDelete(theater.id)}>
+          <span onClick={() => handleDelete(space.id)}>
               <IoTrash />
           </span>
+
       </div>
 
       <TextAreaInputWithToggle
@@ -89,20 +96,20 @@ export default function TheaterProfileForAdmin({
         onChange={onChange}
         toggleForm={() => setMissionForm(!missionForm)}
         toggleText="Double click to set mission statement"
-        value={workingTheater.mission_statement}
+        value={workingSpace.mission_statement}
       />
 
       <AddressInputWithToggle
-        city={workingTheater.city}
+        city={workingSpace.city}
         formOpen={addressForm}
         onChange={onChange}
         handleFormClose={() => setAddressForm(false)}
         handleSubmit={handleSubmit}
         toggleForm={() => setAddressForm(!addressForm)}
         toggleText="Double click to add address"
-        state={workingTheater.state}
-        street_address={workingTheater.street_address}
-        zip={workingTheater.zip}
+        state={workingSpace.state}
+        street_address={workingSpace.street_address}
+        zip={workingSpace.zip}
       />
       <TelephoneInputWithToggle
         formOpen={phoneForm}
@@ -113,7 +120,7 @@ export default function TheaterProfileForAdmin({
         onChange={onChange}
         toggleForm={() => setPhoneForm(!phoneForm)}
         toggleText="Doubleclick to add phone number"
-        value={workingTheater.phone_number}
+        value={workingSpace.phone_number}
       />
 
       <UrlInputWithToggle
@@ -125,9 +132,8 @@ export default function TheaterProfileForAdmin({
         onChange={onChange}
         toggleForm={() => setUrlForm(!urlForm)}
         toggleText="Doubleclick to add website"
-        value={workingTheater.website}
+        value={workingSpace.website}
       />
     </div>
-
   );
 }
